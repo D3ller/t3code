@@ -1,6 +1,7 @@
 #!/bin/sh
 printf '%s\n' "$*" >> "$FAKE_NPM_LOG"
-prefix="${npm_config_prefix:-$FAKE_NPM_PREFIX}"
+# Windows passes one of two case-insensitive duplicate keys to npm, and the inherited one wins.
+prefix="${NPM_CONFIG_PREFIX:-${npm_config_prefix:-$FAKE_NPM_PREFIX}}"
 if [ "$1" = "root" ] && [ "$2" = "--global" ]; then
   printf '%s\n' "$prefix/lib/node_modules"
   exit 0
